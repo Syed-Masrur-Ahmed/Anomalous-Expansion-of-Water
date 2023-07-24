@@ -7,27 +7,20 @@ public class HeaterScript : MonoBehaviour
 {
     public TMP_Text OnOffText;
     public bool isOn = false;
-    void OnMouseDown(){
+
+    void OnMouseDown()
+    {
         isOn = !isOn;
-        if(isOn){
+        if (isOn) {
             OnOffText.text = "On";
-        }
-        else{
+        } else {
             OnOffText.text = "Off";
         }
     }
 
-    void OnTriggerStay(Collider collider){
+    void OnTriggerStay(Collider collider)
+    {
         GameObject particle = collider.gameObject;
-        if(isOn && particle.tag == "Particle"){
-            particle.GetComponent<ParticleScript>().temperature += 0.1f;
-            if(particle.GetComponent<ParticleScript>().temperature > 90){
-                particle.GetComponent<ParticleScript>().temperature = 90;
-            }
-            float colorGBChannel = 1 - (particle.GetComponent<ParticleScript>().temperature/90);
-            particle.GetComponent<Renderer>().material
-            .SetColor("_Color", new Color(1, colorGBChannel, colorGBChannel));
-            particle.GetComponent<ParticleScript>().speed += 0.002f;
-        }
+        if (isOn && particle.tag == "Particle") particle.GetComponent<ParticleScript>().ChangeTemperature(0.1f);
     }
 }
