@@ -5,17 +5,19 @@ using UnityEngine;
 public class ParticleScript : MonoBehaviour
 {
 
-    Rigidbody rb;
-    float speed = 0.3f;
-    float temperature = 0f;
+    private Rigidbody rb;
+    private float speed = 0.3f;
+    
+    public float temperature = 0f;
 
-    Vector3 GetNewVelocity()
+    private Vector3 GetNewVelocity()
     {
         Vector3 newDirection = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), Random.Range(-1f, 1f));
         return (newDirection / newDirection.magnitude) * speed;
     }
 
-    public void ChangeTemperature(float delT) {
+    public void ChangeTemperature(float delT)
+    {
         if (temperature >= 90f) return;
         temperature += delT;
         float colorGBChannel = 1 - (temperature / 90);
@@ -28,8 +30,21 @@ public class ParticleScript : MonoBehaviour
         rb = GetComponent<Rigidbody>();
     }
 
+    void Update() {
+        if (Input.GetKeyDown("space")) {
+            Debug.Log($"{gameObject.name} : {temperature}");
+        }
+    }
+
     void FixedUpdate()
     {
         if (Random.Range(0f, 1f) < 0.05f) rb.velocity = GetNewVelocity();
+    }
+
+    void OnCollisionStay(Collision collisionInfo)
+    {
+        if (collisionInfo.collider.gameObject.tag != "Particle") return;
+        float otherTemperature = collisionInfo.collider.gameObject.GetComponent<ParticleScript>().temperature;
+        ChangeTemperature((otherTemperature - temperature) / 8);
     }
 }
