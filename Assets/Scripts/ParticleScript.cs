@@ -6,7 +6,8 @@ public class ParticleScript : MonoBehaviour
 {
 
     Rigidbody rb;
-    float speed = 0.3f;
+    public float speed = 0.3f;
+    public float temperature = 0f;
 
     Vector3 GetNewVelocity()
     {
@@ -21,7 +22,6 @@ public class ParticleScript : MonoBehaviour
 
     void FixedUpdate()
     {
-        // if (gameObject.name == "Particle (113)") Debug.Log(rb.velocity);
         if (Random.Range(0f, 1f) < 0.05f) rb.velocity = GetNewVelocity();
     }
 }
