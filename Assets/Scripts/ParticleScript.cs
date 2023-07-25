@@ -18,7 +18,10 @@ public class ParticleScript : MonoBehaviour
 
     public void ChangeTemperature(float delT)
     {
-        if (temperature >= 90f) return;
+        if (temperature + delT >= 90f) {
+            temperature = 90f;
+            return;
+        }
         temperature += delT;
         float colorGBChannel = 1 - (temperature / 90);
         GetComponent<Renderer>().material.SetColor("_Color", new Color(1, colorGBChannel, colorGBChannel));
