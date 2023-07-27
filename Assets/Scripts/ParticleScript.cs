@@ -6,13 +6,23 @@ public class ParticleScript : MonoBehaviour
 {
 
     private Rigidbody rb;
+    private GlobalParticleInfo info;
     private float speed = 0.3f;
-    
     public float temperature = 0f;
 
-    private Vector3 GetNewVelocity()
-    {
-        Vector3 newDirection = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), Random.Range(-1f, 1f));
+
+    private Vector3 GetNewVelocity() {
+        float avgTemperature = info.GetAvgTemperature();
+        float temperatureDifference = info.GetMaxTemperature() - info.GetMinTemperature();
+        float tendToHeight = 4 + 0.125f * (temperature - avgTemperature);
+        float heightLowerBound = -1f;
+        float heightUpperBound = 1f;
+        if (tendToHeight > transform.position.y) {
+            heightLowerBound /= Mathf.Max(1, 0.01f * temperatureDifference * (tendToHeight - transform.position.y));
+        } else if (tendToHeight < transform.position.y) {
+            heightUpperBound /= Mathf.Max(1, 0.1f * temperatureDifference * (transform.position.y - tendToHeight));
+        }
+        Vector3 newDirection = new Vector3(Random.Range(-1f, 1f), Random.Range(heightLowerBound, heightUpperBound), Random.Range(-1f, 1f));
         return (newDirection / newDirection.magnitude) * speed;
     }
 
@@ -31,12 +41,7 @@ public class ParticleScript : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-    }
-
-    void Update() {
-        if (Input.GetKeyDown("space")) {
-            Debug.Log($"{gameObject.name} : {temperature}");
-        }
+        info = GetComponentInParent<GlobalParticleInfo>();
     }
 
     void FixedUpdate()
@@ -44,10 +49,11 @@ public class ParticleScript : MonoBehaviour
         if (Random.Range(0f, 1f) < 0.05f) rb.velocity = GetNewVelocity();
     }
 
-    void OnCollisionStay(Collision collisionInfo)
-    {
-        if (collisionInfo.collider.gameObject.tag != "Particle") return;
-        float otherTemperature = collisionInfo.collider.gameObject.GetComponent<ParticleScript>().temperature;
-        ChangeTemperature((otherTemperature - temperature) / 8);
+    void OnTriggerStay(Collider collider)
+    {   
+        if (collider.gameObject.tag != "Particle") return;
+        float otherTemperature = collider.gameObject.GetComponent<ParticleScript>().temperature;
+        float temperatureDifference = otherTemperature - temperature;
+        ChangeTemperature(temperatureDifference / 20);
     }
 }
