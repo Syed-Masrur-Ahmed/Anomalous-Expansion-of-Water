@@ -35,7 +35,8 @@ public class CameraControl : MonoBehaviour
         {
             float verticalInput = Input.GetAxis("Mouse Y") * rotationSpeed * Time.deltaTime;
             float horizontalInput = Input.GetAxis("Mouse X") * rotationSpeed * Time.deltaTime;
-            if ((verticalInput<0 && Camera.main.transform.position.y < 20) || (verticalInput > 0 && Camera.main.transform.position.y > 6.5))
+            var mainCamY = Camera.main.transform.position.y;
+            if ((verticalInput<0 && mainCamY < 20) || (verticalInput > 0 && mainCamY > 6.5))
             {
                 transform.Rotate(Vector3.right, -verticalInput);
             }
@@ -47,8 +48,8 @@ public class CameraControl : MonoBehaviour
         if (Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y")!=0)
         {
             Vector3 mouseWorldPosDiff = mouseWorldPosStart - Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Vector3 var = transform.position + mouseWorldPosDiff;
-            if (var.x>-8 && var.x<8 && var.y>0 && var.y<5)
+            Vector3 check = transform.position + mouseWorldPosDiff;
+            if (check.x>-11 && check.x<10 && check.y>-8 && check.y<8)
             {
                 transform.position += mouseWorldPosDiff;
             }
