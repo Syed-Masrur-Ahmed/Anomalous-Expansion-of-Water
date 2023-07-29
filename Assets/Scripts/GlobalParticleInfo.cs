@@ -8,10 +8,14 @@ public class GlobalParticleInfo : MonoBehaviour
 
     private ParticleScript[] particleScripts;
     private int particleCount;
-    private float[] particleTemperatures;
+    private ParticleInfo[] particlesInfo;
     private float temperatureSum;
     private float maxTemperature;
     private float minTemperature;
+
+    public ParticleInfo[] ExportInfo() {
+        return particlesInfo;
+    }
 
     public float GetAvgTemperature() {
         return temperatureSum / particleCount;
@@ -25,20 +29,17 @@ public class GlobalParticleInfo : MonoBehaviour
         return minTemperature;
     }
 
-    // Start is called before the first frame update
     void Start() {
         particleScripts = GetComponentsInChildren<ParticleScript>();
         particleCount = particleScripts.Length;
     }
-
-    // Update is called once per frame
-    void Update() {
-        particleTemperatures = particleScripts.Select((x) => x.temperature).ToArray();
-        temperatureSum = particleTemperatures.Sum();
-        maxTemperature = particleTemperatures.Max();
-        minTemperature = particleTemperatures.Min();
-        if (Input.GetKeyDown("space")) {
-            Debug.Log(GetAvgTemperature());
+    
+    void FixedUpdate() {
+        particlesInfo = particleScripts.Select((x) => x.info).ToArray();
+        foreach (ParticleInfo info in particlesInfo) {
+            temperatureSum += info.temperature;
+            maxTemperature = Mathf.Max(maxTemperature, info.temperature);
+            minTemperature = Mathf.Min(minTemperature, info.temperature);
         }
     }
 }

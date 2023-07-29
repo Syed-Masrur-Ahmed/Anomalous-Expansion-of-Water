@@ -6,14 +6,15 @@ public class ParticleScript : MonoBehaviour
 {
 
     private Rigidbody rb;
-    private GlobalParticleInfo info;
     private float speed = 0.3f;
     public float temperature = 0f;
+    public ParticleInfo info;
+    private GlobalParticleInfo globalInfo;
 
 
     private Vector3 GetNewVelocity() {
-        float avgTemperature = info.GetAvgTemperature();
-        float temperatureDifference = info.GetMaxTemperature() - info.GetMinTemperature();
+        float avgTemperature = globalInfo.GetAvgTemperature();
+        float temperatureDifference = globalInfo.GetMaxTemperature() - globalInfo.GetMinTemperature();
         float tendToHeight = 4 + 0.125f * (temperature - avgTemperature);
         float heightLowerBound = -1f;
         float heightUpperBound = 1f;
@@ -26,8 +27,7 @@ public class ParticleScript : MonoBehaviour
         return (newDirection / newDirection.magnitude) * speed;
     }
 
-    public void ChangeTemperature(float delT)
-    {
+    public void ChangeTemperature(float delT) {
         if (temperature + delT >= 90f) {
             temperature = 90f;
             return;
@@ -38,19 +38,19 @@ public class ParticleScript : MonoBehaviour
         speed += (delT / 0.1f) * 0.002f;
     }
 
-    void Start()
-    {
+    void Start() {
         rb = GetComponent<Rigidbody>();
-        info = GetComponentInParent<GlobalParticleInfo>();
+        info = new ParticleInfo(transform.position, temperature);
+        globalInfo = GetComponentInParent<GlobalParticleInfo>();
     }
 
-    void FixedUpdate()
-    {
+    void FixedUpdate() {
+        info.position = transform.position;
+        info.temperature = temperature;
         if (Random.Range(0f, 1f) < 0.05f) rb.velocity = GetNewVelocity();
     }
 
-    void OnTriggerStay(Collider collider)
-    {   
+    void OnTriggerStay(Collider collider) {
         if (collider.gameObject.tag != "Particle") return;
         float otherTemperature = collider.gameObject.GetComponent<ParticleScript>().temperature;
         float temperatureDifference = otherTemperature - temperature;
