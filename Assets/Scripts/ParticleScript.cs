@@ -8,7 +8,6 @@ public class ParticleScript : MonoBehaviour
     private Rigidbody rb;
     private float speed = 0.3f;
     public float temperature = 0f;
-    public ParticleInfo info;
     private GlobalParticleInfo globalInfo;
 
 
@@ -28,10 +27,7 @@ public class ParticleScript : MonoBehaviour
     }
 
     public void ChangeTemperature(float delT) {
-        if (temperature + delT >= 90f) {
-            temperature = 90f;
-            return;
-        }
+        delT = Mathf.Min(delT, 90 - temperature);
         temperature += delT;
         float colorGBChannel = 1 - (temperature / 90);
         GetComponent<Renderer>().material.SetColor("_Color", new Color(1, colorGBChannel, colorGBChannel));
@@ -40,17 +36,14 @@ public class ParticleScript : MonoBehaviour
 
     void Start() {
         rb = GetComponent<Rigidbody>();
-        info = new ParticleInfo(transform.position, temperature);
         globalInfo = GetComponentInParent<GlobalParticleInfo>();
     }
 
     void FixedUpdate() {
-        info.position = transform.position;
-        info.temperature = temperature;
         if (Random.Range(0f, 1f) < 0.05f) rb.velocity = GetNewVelocity();
     }
 
-    void OnTriggerStay(Collider collider) {
+    void OnTriggerStay(Collider collider) {   
         if (collider.gameObject.tag != "Particle") return;
         float otherTemperature = collider.gameObject.GetComponent<ParticleScript>().temperature;
         float temperatureDifference = otherTemperature - temperature;

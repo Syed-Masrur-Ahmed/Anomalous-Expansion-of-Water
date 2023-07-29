@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.574817, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3914,7 +3914,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 705209576}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1717016952}
+        m_TargetAssemblyTypeName: PlaybackScript, Assembly-CSharp
+        m_MethodName: PreviousFrame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &705209576
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9494,6 +9506,8 @@ MonoBehaviour:
   PlayButton: {fileID: 1900354690}
   FastForwardButton: {fileID: 1914801526}
   SlowDownButton: {fileID: 906595528}
+  NextFrameButton: {fileID: 1982920171}
+  PreviousFrameButton: {fileID: 705209575}
 --- !u!1 &1721921239
 GameObject:
   m_ObjectHideFlags: 0
@@ -11241,7 +11255,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1982920172}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1717016952}
+        m_TargetAssemblyTypeName: PlaybackScript, Assembly-CSharp
+        m_MethodName: NextFrame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1982920172
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -7,7 +7,6 @@ public class GlobalParticleInfo : MonoBehaviour
 {
 
     private ParticleScript[] particleScripts;
-    private int particleCount;
     private ParticleInfo[] particlesInfo;
     private float temperatureSum;
     private float maxTemperature;
@@ -18,7 +17,7 @@ public class GlobalParticleInfo : MonoBehaviour
     }
 
     public float GetAvgTemperature() {
-        return temperatureSum / particleCount;
+        return temperatureSum / 125;
     }
 
     public float GetMaxTemperature() {
@@ -31,11 +30,19 @@ public class GlobalParticleInfo : MonoBehaviour
 
     void Start() {
         particleScripts = GetComponentsInChildren<ParticleScript>();
-        particleCount = particleScripts.Length;
+    }
+
+    void Update() {
+        if (Input.GetKeyDown("space")) {
+            Debug.Log(GetAvgTemperature());
+            Debug.Log(GetMaxTemperature());
+            Debug.Log(GetMinTemperature());
+        }
     }
     
     void FixedUpdate() {
-        particlesInfo = particleScripts.Select((x) => x.info).ToArray();
+        temperatureSum = 0f;
+        particlesInfo = particleScripts.Select((x) => new ParticleInfo(x.gameObject.transform.position, x.temperature)).ToArray();
         foreach (ParticleInfo info in particlesInfo) {
             temperatureSum += info.temperature;
             maxTemperature = Mathf.Max(maxTemperature, info.temperature);
