@@ -8,8 +8,7 @@ public class HeaterScript : MonoBehaviour
     public TMP_Text OnOffText;
     public bool isOn = false;
 
-    void OnMouseDown()
-    {
+    void OnMouseDown() {
         isOn = !isOn;
         if (isOn) {
             OnOffText.text = "On";
@@ -18,8 +17,7 @@ public class HeaterScript : MonoBehaviour
         }
     }
 
-    void OnTriggerStay(Collider collider)
-    {
+    void OnTriggerStay(Collider collider) {
         GameObject particle = collider.gameObject;
         if (isOn && particle.tag == "Particle") particle.GetComponent<ParticleScript>().ChangeTemperature(0.1f);
     }

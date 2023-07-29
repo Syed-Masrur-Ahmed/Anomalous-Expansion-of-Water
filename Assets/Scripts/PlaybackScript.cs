@@ -15,8 +15,7 @@ public class PlaybackScript : MonoBehaviour
     private float[] timeScales = {0.5f, 0.75f, 1f, 1.5f, 2f};
     private int timeIndex = 2;
 
-    public void ChangeTimeIndex(int n) 
-    {
+    public void ChangeTimeIndex(int n) {
         timeIndex += n;
         Time.timeScale = timeScales[timeIndex];
         TimeScaleText.text = "Time: " + timeScales[timeIndex].ToString() + "x"; 
@@ -24,38 +23,32 @@ public class PlaybackScript : MonoBehaviour
         SlowDownButton.interactable = Convert.ToBoolean(timeIndex);
     }
 
-    public void ShowPlayButton() 
-    {
+    public void ShowPlayButton() {
         PauseButton.gameObject.SetActive(false);
         PlayButton.gameObject.SetActive(true);
     }
 
-    public void ShowPauseButton() 
-    {
+    public void ShowPauseButton() {
         PauseButton.gameObject.SetActive(true);
         PlayButton.gameObject.SetActive(false);
     }
     
-    public void Pause() 
-    {
+    public void Pause() {
         Time.timeScale = 0;
         ShowPlayButton();
     }    
 
-    public void Play()
-    {
+    public void Play() {
         ChangeTimeIndex(0);
         ShowPauseButton();
     }
 
-    public void FastForward() 
-    {   
+    public void FastForward() {   
         ChangeTimeIndex(1);
         ShowPauseButton();
     }
 
-    public void SlowDown() 
-    {   
+    public void SlowDown() {   
         ChangeTimeIndex(-1);
         ShowPauseButton();
     }

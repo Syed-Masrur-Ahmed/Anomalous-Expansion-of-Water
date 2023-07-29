@@ -5,7 +5,7 @@ using UnityEngine;
 public class ToggleParticles : MonoBehaviour
 {
     public GameObject[] particleList;
-    void Start(){
+    void Start() {
         particleList = GameObject.FindGameObjectsWithTag("Particle");
     }
 
