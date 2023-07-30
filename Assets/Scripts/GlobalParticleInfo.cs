@@ -41,12 +41,9 @@ public class GlobalParticleInfo : MonoBehaviour
     }
     
     void FixedUpdate() {
-        temperatureSum = 0f;
         particlesInfo = particleScripts.Select((x) => new ParticleInfo(x.gameObject.transform.position, x.temperature)).ToArray();
-        foreach (ParticleInfo info in particlesInfo) {
-            temperatureSum += info.temperature;
-            maxTemperature = Mathf.Max(maxTemperature, info.temperature);
-            minTemperature = Mathf.Min(minTemperature, info.temperature);
-        }
+        temperatureSum = particlesInfo.Select((x) => x.temperature).Sum();
+        maxTemperature = particlesInfo.Select((x) => x.temperature).Max();
+        minTemperature = particlesInfo.Select((x) => x.temperature).Min();
     }
 }
