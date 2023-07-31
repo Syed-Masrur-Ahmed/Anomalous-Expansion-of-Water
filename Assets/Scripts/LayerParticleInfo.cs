@@ -17,7 +17,7 @@ public class GlobalParticleInfo : MonoBehaviour
     }
 
     public float GetAvgTemperature() {
-        return temperatureSum / 125;
+        return temperatureSum / 25;
     }
 
     public float GetMaxTemperature() {

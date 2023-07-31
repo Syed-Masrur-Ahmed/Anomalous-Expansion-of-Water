@@ -5,11 +5,12 @@ TagManager:
   serializedVersion: 2
   tags:
   - Particle
+  - Water Layer
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Water Layer
   - Water
   - UI
   - Particles

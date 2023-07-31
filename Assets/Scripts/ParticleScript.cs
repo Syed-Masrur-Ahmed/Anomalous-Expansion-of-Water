@@ -8,22 +8,10 @@ public class ParticleScript : MonoBehaviour
     private Rigidbody rb;
     private float speed = 0.72f;
     public float temperature = 25f;
-    private GlobalParticleInfo globalInfo;
 
 
     private Vector3 GetNewVelocity() {
-        float avgTemperature = globalInfo.GetAvgTemperature();
-        float temperatureDifference = globalInfo.GetMaxTemperature() - globalInfo.GetMinTemperature();
-        float tendToHeight = 4 + 0.125f * (temperature - avgTemperature);
-        float heightLowerBound = -1f;
-        float heightUpperBound = 1f;
-        if (tendToHeight > transform.position.y) {
-            heightLowerBound /= Mathf.Max(1, 0.1f * temperatureDifference * (tendToHeight - transform.position.y));
-        } else if (tendToHeight < transform.position.y) {
-            heightUpperBound /= Mathf.Max(1, 0.1f * temperatureDifference * (transform.position.y - tendToHeight));
-        }
-        Vector3 newDirection = new Vector3(Random.Range(-1f, 1f), Random.Range(heightLowerBound, heightUpperBound), Random.Range(-1f, 1f));
-        if (temperature < -5) Debug.Log($"{temperature} , {avgTemperature}, {tendToHeight}, {heightUpperBound}, {heightLowerBound}, {speed}");
+        Vector3 newDirection = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), Random.Range(-1f, 1f));
         return (newDirection / newDirection.magnitude) * speed;
     }
 
@@ -50,7 +38,6 @@ public class ParticleScript : MonoBehaviour
 
     void Start() {
         rb = GetComponent<Rigidbody>();
-        globalInfo = GetComponentInParent<GlobalParticleInfo>();
     }
 
     void FixedUpdate() {
