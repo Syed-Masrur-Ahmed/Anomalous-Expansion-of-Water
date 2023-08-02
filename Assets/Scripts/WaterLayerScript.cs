@@ -2,32 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System.Linq;
+
 public class WaterLayerScript : MonoBehaviour
 {   
-    public float temperature;
+    public float avgTemperature;
     
-    void FixedUpdate()
-    {
-        temperature = gameObject.GetComponentInChildren<GlobalParticleInfo>().GetAvgTemperature();
+    void FixedUpdate() {
+        avgTemperature = gameObject.GetComponentsInChildren<ParticleScript>().Select((x) => x.temperature).Sum() / 25;
         TMP_Text temperatureText = gameObject.GetComponentInChildren<TMP_Text>();
-        temperatureText.text = temperature.ToString("0.0") + "° C";
-    }
-
-    void OnTriggerStay(Collider collider)
-    {
-        if (collider.gameObject.tag == "Water Layer")
-        {
-            float otherTemperature = collider.gameObject.GetComponent<WaterLayerScript>().temperature;
-            float otherHeight = collider.gameObject.transform.position.y;
-            if (temperature > otherTemperature && transform.position.y < otherHeight)
-            {
-                //slowly move up 1 unit
-            }
-            if (temperature < otherTemperature && transform.position.y > otherHeight)
-            {
-                //slowly move down 1 unit
-            }
-        }
+        temperatureText.text = avgTemperature.ToString("0.0") + "° C";
     }
     
 }

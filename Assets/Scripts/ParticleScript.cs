@@ -22,15 +22,11 @@ public class ParticleScript : MonoBehaviour
         speed = 0.012f*temperature + 0.42f;
     }
 
-    public Color GetColor() 
-    {
-        if (temperature < 25)
-        {
+    public Color GetColor() {
+        if (temperature < 25) {
             float colorRGChannel = (temperature + 10) / 35f;
             return new Color(colorRGChannel, colorRGChannel, 1);
-        }
-        else
-        {
+        } else {
             float colorGBChannel = (90 - temperature) / 65f;
             return new Color(1, colorGBChannel, colorGBChannel);
         }
@@ -44,7 +40,7 @@ public class ParticleScript : MonoBehaviour
         if (Random.Range(0f, 1f) < 0.05f) rb.velocity = GetNewVelocity();
     }
 
-    void OnTriggerStay(Collider collider) {   
+    void OnTriggerStay(Collider collider) {
         if (collider.gameObject.tag != "Particle") return;
         float otherTemperature = collider.gameObject.GetComponent<ParticleScript>().temperature;
         float temperatureDifference = otherTemperature - temperature;

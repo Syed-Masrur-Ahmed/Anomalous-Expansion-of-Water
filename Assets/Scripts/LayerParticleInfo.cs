@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class GlobalParticleInfo : MonoBehaviour
+public class LayerParticleInfo : MonoBehaviour
 {
 
     private ParticleScript[] particleScripts;

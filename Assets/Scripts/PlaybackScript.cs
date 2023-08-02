@@ -6,6 +6,12 @@ using UnityEngine.UI;
 using TMPro;
 using System.Linq;
 
+/*
+
+Need to record water layer avg temperature in state as well.
+
+*/
+
 public class PlaybackScript : MonoBehaviour
 {
     public TMP_Text TimeScaleText;
@@ -24,7 +30,6 @@ public class PlaybackScript : MonoBehaviour
     private int stateIndex;
     private ParticleScript[] particleScripts;
     private List<ParticleInfo[]> states = new List<ParticleInfo[]>();
-    private GlobalParticleInfo globalInfo;
 
     public void ChangeSpeed(int n) {
         speedIndex += n;
@@ -84,7 +89,7 @@ public class PlaybackScript : MonoBehaviour
     }
 
     public void RecordState() {
-        states.Add(globalInfo.ExportInfo());
+        states.Add(particleScripts.Select((x) => new ParticleInfo(x.gameObject.transform.position, x.temperature)).ToArray());
         if (states.Count > 100) states.RemoveAt(0);
         stateIndex = states.Count - 1;
     }
@@ -93,7 +98,6 @@ public class PlaybackScript : MonoBehaviour
         timer = 0f;
         stateIndex = -1;
         particleScripts = GameObject.FindGameObjectsWithTag("Particle").Select((x) => x.GetComponent<ParticleScript>()).ToArray();
-        globalInfo = GameObject.Find("Particles").GetComponent<GlobalParticleInfo>();
     }
 
     void Update() {

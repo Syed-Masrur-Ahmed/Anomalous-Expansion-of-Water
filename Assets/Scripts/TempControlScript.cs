@@ -12,29 +12,24 @@ public class TempControlScript : MonoBehaviour
     public Button DecreaseTempButton;
     public float equilibriumTemperature = 25f;
 
-    public void IncreaseTemp() 
-    {
+    public void IncreaseTemp() {
         equilibriumTemperature += 1;
         CurrentTemp.text = equilibriumTemperature.ToString() + "° C";
         IncreaseTempButton.interactable = Convert.ToBoolean(40 - equilibriumTemperature);
         DecreaseTempButton.interactable = true;
     }
 
-    public void DecreaseTemp() 
-    {
+    public void DecreaseTemp() {
         equilibriumTemperature -= 1;
         CurrentTemp.text = equilibriumTemperature.ToString() + "° C";
         DecreaseTempButton.interactable = Convert.ToBoolean(-10 - equilibriumTemperature);
         IncreaseTempButton.interactable = true;
     }
 
-    public void OnTriggerStay(Collider collider)
-    {
-        if (collider.gameObject.tag == "Particle") 
-        {
+    public void OnTriggerStay(Collider collider) {
+        if (collider.gameObject.tag == "Particle") {
             ParticleScript particleScript = collider.gameObject.GetComponent<ParticleScript>();
             particleScript.ChangeTemperature((equilibriumTemperature - particleScript.temperature)/100f);
-        } 
-        
+        }
     }
 }
