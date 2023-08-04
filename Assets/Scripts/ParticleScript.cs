@@ -7,7 +7,7 @@ public class ParticleScript : MonoBehaviour
 
     private Rigidbody rb;
     private float speed = 0.72f;
-    public float temperature = 25f;
+    public float temperature = 10f;
 
 
     private Vector3 GetNewVelocity() {
@@ -17,19 +17,14 @@ public class ParticleScript : MonoBehaviour
 
     public void ChangeTemperature(float delT) {
         temperature += delT;
-        if (temperature >= 90) temperature = 90;
+        if (temperature >= 10) temperature = 10;
         GetComponent<Renderer>().material.SetColor("_Color", GetColor());
         speed = 0.012f*temperature + 0.42f;
     }
 
     public Color GetColor() {
-        if (temperature < 25) {
-            float colorRGChannel = (temperature + 10) / 35f;
-            return new Color(colorRGChannel, colorRGChannel, 1);
-        } else {
-            float colorGBChannel = (90 - temperature) / 65f;
-            return new Color(1, colorGBChannel, colorGBChannel);
-        }
+        float colorRGChannel = (temperature + 10) / 20f;
+        return new Color(colorRGChannel, colorRGChannel, 1);
     }
 
     void Start() {
