@@ -30,10 +30,11 @@ public class CameraControl : MonoBehaviour
             float verticalInput = Input.GetAxis("Mouse Y") * rotationSpeed * Time.deltaTime;
             float horizontalInput = Input.GetAxis("Mouse X") * rotationSpeed * Time.deltaTime;
             var mainCamY = Camera.main.transform.position.y;
-            if ((verticalInput < 0 && mainCamY < 20) || (verticalInput > 0 && mainCamY > 6.5)) {
+            if ((verticalInput < 0 && mainCamY < 10) || (verticalInput > 0 && mainCamY > 4))
+            {
                 transform.Rotate(Vector3.right, -verticalInput);
             }
-            transform.Rotate(Vector3.up, horizontalInput, Space.World);
+            /*transform.Rotate(Vector3.up, horizontalInput, Space.World);*/
         }
     }
 
@@ -49,10 +50,7 @@ public class CameraControl : MonoBehaviour
 
     private void Zoom(float zoomDiff) {
         if (zoomDiff != 0) {
-            mouseWorldPosStart = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize - zoomDiff * zoomScale, zoomMin, zoomMax);
-            Vector3 mouseWorldPosDiff = mouseWorldPosStart - Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            transform.position += mouseWorldPosDiff;
+            transform.position = transform.position + (transform.forward * zoomDiff);
         }
     }
 }
