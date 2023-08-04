@@ -179,7 +179,7 @@ GameObject:
   - component: {fileID: 3029099041180509862}
   - component: {fileID: -8319208996503224830}
   m_Layer: 0
-  m_Name: Water Layer (1)
+  m_Name: Water Layer
   m_TagString: Water Layer
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
