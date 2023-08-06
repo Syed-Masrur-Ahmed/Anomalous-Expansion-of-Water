@@ -7,9 +7,9 @@ public class CameraControl : MonoBehaviour
 {
     private float rotationSpeed = 500.0f;
     private Vector3 mouseWorldPosStart;
-    private float zoomScale = 10.0f;
-    private float zoomMin = 0.1f;
-    private float zoomMax = 10.0f;
+    // private float zoomScale = 10.0f;
+    // private float zoomMin = 0.1f;
+    // private float zoomMax = 10.0f;
 
     void Update() {
         if (Input.GetKey(KeyCode.LeftAlt) && Input.GetKey(KeyCode.Mouse0)) {
