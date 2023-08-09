@@ -11,7 +11,7 @@ public class TempControlScript : MonoBehaviour
     public Button IncreaseTempButton;
     public Button DecreaseTempButton;
     public float equilibriumTemperature = 10;
-
+    
     public void IncreaseTemp() {
         equilibriumTemperature += 1;
         CurrentTemp.text = equilibriumTemperature.ToString() + "° C";
