@@ -16,32 +16,36 @@ public class WaterLayerMoverScript : MonoBehaviour
     }
 
     void Update() {
-        if (simulationCount < 250) return;
+        if (simulationCount < 100) return;
         simulationCount = 0;
-        for (int i = 0; i < 5; i++) {
-            Debug.Log(waterLayerScripts[i].avgTemperature);
-        }
         Array.Sort(waterLayerScripts, (WaterLayerScript layer1, WaterLayerScript layer2) => {
             if (layer1.gameObject.transform.position.y < layer2.gameObject.transform.position.y) return -1;
             else if (layer1.gameObject.transform.position.y > layer2.gameObject.transform.position.y) return 1;
             return 0;
         });
-        float maxTempDiff = 0; // change to density for anomaly
         int swap = -1;
-        for (int i = 1; i < 5; i++) {
-            if (waterLayerScripts[i - 1].avgTemperature - waterLayerScripts[i].avgTemperature > maxTempDiff) {
-                swap = i;
-                maxTempDiff = waterLayerScripts[i - 1].avgTemperature - waterLayerScripts[i].avgTemperature;
-            }
+        for (int i = 4; i > 0; i--) {
+            if (waterLayerScripts[i - 1].avgTemperature - waterLayerScripts[i].avgTemperature >= 0.1f) swap = i;
         }
-        if (maxTempDiff < 0.1f) return;
-        waterLayerScripts[swap].gameObject.transform.position += Vector3.down;
-        waterLayerScripts[swap - 1].gameObject.transform.position += Vector3.up;
+        if (swap == -1) return;
+        StartCoroutine(SwapLayers(waterLayerScripts[swap].gameObject.transform, waterLayerScripts[swap - 1].gameObject.transform));
     }
 
-    // IEnumerator SwapLayers(WaterLayerScript layer1, WaterLayerScript layer2) {
-
-    // }
+    IEnumerator SwapLayers(Transform t1, Transform t2) {
+        Vector3 pos1 = t1.position;
+        Vector3 pos2 = t2.position;
+        Vector3 center = (pos1 + pos2) * 0.5f;
+        float progress = 0;
+        while (progress < 1f) {
+            progress += Time.deltaTime / swapDuration;
+            t1.position = Vector3.Slerp(pos1 - center, pos2 - center, progress);
+            t1.position += center;
+            t2.position = Vector3.Lerp(pos2, pos1, progress);
+            yield return null;
+        }
+        t1.position = pos2;
+        t2.position = pos1;
+    }
 
     void FixedUpdate() {
         simulationCount++;
