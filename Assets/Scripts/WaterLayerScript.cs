@@ -14,15 +14,19 @@ public class WaterLayerScript : MonoBehaviour
         TMP_Text temperatureText = gameObject.GetComponentInChildren<TMP_Text>();
         temperatureText.text = avgTemperature.ToString("0.0") + "° C";
         float colorRGChannel = 50 * (avgTemperature - 1) / 3f;
-        if (avgTemperature < 0) return;
+        if (avgTemperature < 0) 
+        {
+            Ice.GetComponent<Renderer>().material.color = new Color(219 / 255f, 247 / 255f, 248 / 255f, 1);
+            GetComponent<Renderer>().material.color = new Color(0, 0, 1, 0);
+            return;
+        }
         if (avgTemperature < 1) 
-        {
+        { 
             Ice.GetComponent<Renderer>().material.color = new Color(219 / 255f, 247 / 255f, 248 / 255f, 1 - avgTemperature);
+            GetComponent<Renderer>().material.color = new Color(0, 0, 1, avgTemperature);
+            return;
         }
-        else
-        {
-            GetComponent<Renderer>().material.color = new Color(colorRGChannel / 255, colorRGChannel / 255, 1, 200 / 255f);
-        }
+        GetComponent<Renderer>().material.color = new Color(colorRGChannel / 255, colorRGChannel / 255, 1, 200 / 255f);
     }
     
 }
