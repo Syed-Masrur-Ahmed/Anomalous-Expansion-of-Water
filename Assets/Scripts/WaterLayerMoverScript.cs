@@ -10,6 +10,10 @@ public class WaterLayerMoverScript : MonoBehaviour
     private int simulationCount;
     private WaterLayerScript[] waterLayerScripts;
 
+    float GetDensity(float temperature) {
+        return -Mathf.Abs(temperature - 4);
+    }
+
     void Start() {
         simulationCount = 0;
         waterLayerScripts = GetComponentsInChildren<WaterLayerScript>();
@@ -25,7 +29,9 @@ public class WaterLayerMoverScript : MonoBehaviour
         });
         int swap = -1;
         for (int i = 4; i > 0; i--) {
-            if (waterLayerScripts[i - 1].avgTemperature - waterLayerScripts[i].avgTemperature >= 0.1f) swap = i;
+            float t1 = Mathf.Round(waterLayerScripts[i].avgTemperature * 10f) * 0.1f;
+            float t2 = Mathf.Round(waterLayerScripts[i - 1].avgTemperature * 10f) * 0.1f;
+            if (GetDensity(t1) > GetDensity(t2)) swap = i;
         }
         if (swap == -1) return;
         StartCoroutine(SwapLayers(waterLayerScripts[swap].gameObject.transform, waterLayerScripts[swap - 1].gameObject.transform));

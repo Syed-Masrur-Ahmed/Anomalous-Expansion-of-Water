@@ -6,12 +6,6 @@ using UnityEngine.UI;
 using TMPro;
 using System.Linq;
 
-/*
-
-Need to record water layer avg temperature in state as well.
-
-*/
-
 public class PlaybackScript : MonoBehaviour
 {
     public TMP_Text TimeScaleText;
