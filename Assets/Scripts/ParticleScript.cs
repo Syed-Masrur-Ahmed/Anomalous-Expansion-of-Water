@@ -23,7 +23,8 @@ public class ParticleScript : MonoBehaviour
     }
 
     public Color GetColor() {
-        float colorRGChannel = (temperature + 10) / 20f;
+        float colorRGChannel = temperature / 10f;
+        if (colorRGChannel < 0) colorRGChannel = 0;
         return new Color(colorRGChannel, colorRGChannel, 1);
     }
 

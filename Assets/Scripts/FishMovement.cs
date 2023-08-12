@@ -12,8 +12,8 @@ public class FishMovement : MonoBehaviour
         float currentPosX = transform.position.x;
         Vector3 newDirection = new Vector3(Random.Range(-1f, 1f), 0, 0);
         if (currentPosX < 0.5 || currentPosX > 4.5) newDirection.x = 2.5f - currentPosX;
-        if (newDirection.x > 0) transform.eulerAngles = new Vector3(0, 0, 0);
-        if (newDirection.x < 0) transform.eulerAngles = new Vector3(0, 180, 0);
+        if (newDirection.x > 0) transform.eulerAngles = new Vector3(0, 90, 0);
+        if (newDirection.x < 0) transform.eulerAngles = new Vector3(0, 270, 0);
         return (newDirection / newDirection.magnitude) * speed;
     }
 
