@@ -95,7 +95,7 @@ public class PlaybackScript : MonoBehaviour
     }
 
     void Update() {
-        PreviousFrameButton.interactable = (Time.timeScale == 0 && stateIndex > 0);
+        //PreviousFrameButton.interactable = (Time.timeScale == 0 && stateIndex > 0);
         NextFrameButton.interactable = (Time.timeScale == 0);
     }
 

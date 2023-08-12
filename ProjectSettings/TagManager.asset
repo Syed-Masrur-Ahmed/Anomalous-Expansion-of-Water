@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Particle
   - Water Layer
+  - Ice Mask
   layers:
   - Default
   - TransparentFX

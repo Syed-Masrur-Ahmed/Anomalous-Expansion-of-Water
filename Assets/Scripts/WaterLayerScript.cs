@@ -7,23 +7,20 @@ using System.Linq;
 public class WaterLayerScript : MonoBehaviour
 {   
     public float avgTemperature;
-    public GameObject Ice;
-    
+
     void Update() {
         avgTemperature = gameObject.GetComponentsInChildren<ParticleScript>().Select((x) => x.temperature).Sum() / 25;
         TMP_Text temperatureText = gameObject.GetComponentInChildren<TMP_Text>();
         temperatureText.text = avgTemperature.ToString("0.0") + "° C";
-        float colorRGChannel = 50 * (avgTemperature - 1) / 3f;
-        if (avgTemperature < 0) 
+        float colorRGChannel = 15 * avgTemperature;
+        if (avgTemperature < -0.5f) 
         {
-            Ice.GetComponent<Renderer>().material.color = new Color(219 / 255f, 247 / 255f, 248 / 255f, 1);
-            GetComponent<Renderer>().material.color = new Color(0, 0, 1, 0);
+            GetComponent<Renderer>().material.color = new Color(0, 0, 1, 200 / 255f);
             return;
         }
-        if (avgTemperature < 1) 
+        if (avgTemperature < 0) 
         { 
-            Ice.GetComponent<Renderer>().material.color = new Color(219 / 255f, 247 / 255f, 248 / 255f, 1 - avgTemperature);
-            GetComponent<Renderer>().material.color = new Color(0, 0, 1, avgTemperature);
+            //GetComponent<Renderer>().material.color = new Color(0, 0, 1, 2 * avgTemperature + 1f);
             return;
         }
         GetComponent<Renderer>().material.color = new Color(colorRGChannel / 255, colorRGChannel / 255, 1, 200 / 255f);
