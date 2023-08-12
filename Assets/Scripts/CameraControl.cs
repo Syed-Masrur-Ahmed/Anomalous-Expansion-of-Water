@@ -26,11 +26,12 @@ public class CameraControl : MonoBehaviour
     }
 
     private void CamOrbit() {
-        if (Input.GetAxis("Mouse Y") != 0 || Input.GetAxis("Mouse X") != 0) {
-            float verticalInput = Input.GetAxis("Mouse Y") * rotationSpeed * Time.unscaledDeltaTime;
-            float horizontalInput = Input.GetAxis("Mouse X") * rotationSpeed * Time.unscaledDeltaTime;
-            var mainCamY = Camera.main.transform.position.y;
-            if ((verticalInput < 0 && mainCamY < 10) || (verticalInput > 0 && mainCamY > 4))
+        if (Input.GetAxis("Mouse Y") != 0 || Input.GetAxis("Mouse X") != 0)
+        {
+            float verticalInput = Input.GetAxis("Mouse Y") * rotationSpeed * Time.deltaTime;
+            float horizontalInput = Input.GetAxis("Mouse X") * rotationSpeed * Time.deltaTime;
+            var mainCamY = Camera.main.transform.rotation.x;
+            if ((verticalInput < 0 && mainCamY < 0.70) || (verticalInput > 0 && mainCamY > 0.04))
             {
                 transform.Rotate(Vector3.right, -verticalInput);
             }
@@ -40,17 +41,21 @@ public class CameraControl : MonoBehaviour
 
     private void Pan() {
         if (Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0) {
-            Vector3 mouseWorldPosDiff = mouseWorldPosStart - Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Vector3 check = transform.position + mouseWorldPosDiff;
-            if (check.x > -11 && check.x < 10 && check.y > -8 && check.y < 8) {
-                transform.position += mouseWorldPosDiff;
+            Vector3 check = transform.position - transform.right * Input.GetAxis("Mouse X") - transform.up * Input.GetAxis("Mouse Y");
+            if (check.x > -10 && check.x < 10 && check.y > -20 && check.y < 10) {
+                transform.position = check;
             }
         }
     }
 
     private void Zoom(float zoomDiff) {
         if (zoomDiff != 0) {
-            transform.position = transform.position + (transform.forward * zoomDiff);
+            var check = transform.position + transform.forward * zoomDiff;
+            var mainCamY = Camera.main.transform.rotation.x;
+            if ((check.z > 10 && check.z < 25) || (check.z<15 && check.z>-5))
+            {
+                transform.position = transform.position + (transform.forward * zoomDiff);
+            }
         }
     }
 }
