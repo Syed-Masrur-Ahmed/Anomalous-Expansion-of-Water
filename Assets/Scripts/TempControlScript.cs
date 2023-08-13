@@ -29,7 +29,11 @@ public class TempControlScript : MonoBehaviour
     public void OnTriggerStay(Collider collider) {
         if (collider.gameObject.tag == "Particle") {
             ParticleScript particleScript = collider.gameObject.GetComponent<ParticleScript>();
-            particleScript.ChangeTemperature((equilibriumTemperature - particleScript.temperature)/500f);
+            if (equilibriumTemperature < particleScript.temperature) {
+                particleScript.ChangeTemperature(-0.5f * Time.deltaTime);
+            } else if (equilibriumTemperature > particleScript.temperature) {
+                particleScript.ChangeTemperature(0.5f * Time.deltaTime);
+            }
         }
     }
 }
