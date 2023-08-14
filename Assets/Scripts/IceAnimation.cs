@@ -15,12 +15,11 @@ public class IceAnimation : MonoBehaviour
         if (collider.gameObject.tag == "Water Layer") {
             temperature = collider.gameObject.GetComponent<WaterLayerScript>().avgTemperature;
             if (temperature < 0) {
-                IceMask.transform.position = new Vector3(2.5f, 1.2f * temperature + 5.4f, 2.25f);
+                IceMask.transform.position = new Vector3(2.5f, 2.4f * temperature + 6f, 2.25f);
                 IceMask.GetComponent<Renderer>().enabled = temperature > -0.5f;
             } else {
                 IceMask.transform.position = new Vector3(2.5f, 6f, 2.25f);
             }
-            //GetComponent<Renderer>().enabled = temperature < 0f;
         }
     }
 }
