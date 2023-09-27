@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class WaterLayerMoverScript : MonoBehaviour
+public class WaterLayersSwapScript : MonoBehaviour
 {
     private const float swapDuration = 1f;
     private WaterLayerScript[] waterLayerScripts;
@@ -14,12 +14,8 @@ public class WaterLayerMoverScript : MonoBehaviour
         return -Mathf.Abs(temperature - 4);
     }
 
-    (int i1, int i2) GetMovingLayers1() {
-        Array.Sort(waterLayerScripts, (WaterLayerScript layer1, WaterLayerScript layer2) => {
-            if (layer1.gameObject.transform.position.y < layer2.gameObject.transform.position.y) return -1;
-            else if (layer1.gameObject.transform.position.y > layer2.gameObject.transform.position.y) return 1;
-            return 0;
-        });
+    (int i1, int i2) GetMisplacedLayers() {
+        waterLayerScripts = gameObject.GetComponent<WaterLayersManagerScript>().waterLayerScripts;
         int i1 = -1;
         float maxDifference = 0;
         for (int i = 1; i < 5; i++) {
@@ -33,27 +29,22 @@ public class WaterLayerMoverScript : MonoBehaviour
         return (i1, i1 - 1);
     }
 
-    (int i1, int i2) GetMovingLayers2() {
-        return (-1, -1);
-    }
-
     void Start() {
-        waterLayerScripts = GetComponentsInChildren<WaterLayerScript>();
-        StartCoroutine(MoveLayersManager());
+        StartCoroutine(SwapLayersManager());
     }
 
-    IEnumerator MoveLayersManager() {
+    IEnumerator SwapLayersManager() {
         while (true) {
-            var movingLayers = GetMovingLayers1();
-            if (movingLayers.i1 != -1) yield return StartCoroutine(MoveLayers(
+            yield return new WaitForSeconds(0.5f); // has to stay above GetMisplacedLayers because Start of this script runs before WaterLayersManagerScript's Start
+            var movingLayers = GetMisplacedLayers();
+            if (movingLayers.i1 != -1) yield return StartCoroutine(SwapLayers(
                 waterLayerScripts[movingLayers.i1].gameObject.transform,
                 waterLayerScripts[movingLayers.i2].gameObject.transform
             ));
-            yield return new WaitForSeconds(0.5f);
         }
     }
 
-    IEnumerator MoveLayers(Transform t1, Transform t2) {
+    IEnumerator SwapLayers(Transform t1, Transform t2) {
         Vector3 pos1 = t1.position;
         Vector3 pos2 = t2.position;
         Vector3 center = (pos1 + pos2) * 0.5f;

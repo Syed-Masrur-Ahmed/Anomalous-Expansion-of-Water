@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.446577, g: 0.49641144, b: 0.574818, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657683, g: 0.49641192, b: 0.5748182, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -4240,7 +4240,9 @@ GameObject:
   - component: {fileID: 541286287}
   - component: {fileID: 541286286}
   - component: {fileID: 541286285}
+  - component: {fileID: 541286290}
   - component: {fileID: 541286288}
+  - component: {fileID: 541286289}
   m_Layer: 0
   m_Name: Water
   m_TagString: Untagged
@@ -4333,9 +4335,37 @@ MonoBehaviour:
   m_GameObject: {fileID: 541286283}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b8fa6f6314da4ba4fac5989fb59ae79a, type: 3}
+  m_Script: {fileID: 11500000, guid: fe8e558c84c42e442a685d7dbb78d1c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &541286289
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 541286283}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b673c2ae99ec8e44b2d48242a44f640, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  topMat: {fileID: 2100000, guid: 0fd09a5cb12d43746aadad51fc3ccd8e, type: 2}
+  middleMat: {fileID: 2100000, guid: 8250def650abcf442b412af1378e2c45, type: 2}
+  bottomMat: {fileID: 2100000, guid: 4a18f29494ea506409c30b015ec137e1, type: 2}
+--- !u!114 &541286290
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 541286283}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c038bdee4ebe3cb4e993d5e5b85a0b6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waterLayerScripts: []
 --- !u!4 &541511249 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 75911e96dbcd5fa4d80ec1f006dc8d9d, type: 3}
@@ -6458,13 +6488,17 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -1461304994638716399, guid: 76e48efaad516d649bfe76258bd0508c, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8250def650abcf442b412af1378e2c45, type: 2}
     - target: {fileID: 919132149155446097, guid: 76e48efaad516d649bfe76258bd0508c, type: 3}
       propertyPath: m_Name
       value: mid_slice
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 76e48efaad516d649bfe76258bd0508c, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
@@ -14124,7 +14158,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 205cbaeb54a00284399bca578e48fa6e, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
@@ -15178,13 +15212,17 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -4683669308469848369, guid: a18fc46cc8739f740b41894e608b187b, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 4a18f29494ea506409c30b015ec137e1, type: 2}
     - target: {fileID: 919132149155446097, guid: a18fc46cc8739f740b41894e608b187b, type: 3}
       propertyPath: m_Name
       value: bottom_slice
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: a18fc46cc8739f740b41894e608b187b, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:

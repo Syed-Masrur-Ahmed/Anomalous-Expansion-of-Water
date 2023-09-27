@@ -12,16 +12,18 @@ public class TempControlScript : MonoBehaviour
     public Button DecreaseTempButton;
     public float equilibriumTemperature = 10;
 
+    private float temperatureDifference = 1;
+
     float GetDeltaTemperature(float currentTemperature, float height) {
         float sign = 0;
         if (equilibriumTemperature < currentTemperature) sign = -1f;
         else if (equilibriumTemperature > currentTemperature) sign = 1f;
         float hFactor = 0;
         if (height < 2.5f) hFactor = 0;
-        else if (height < 3.5f) hFactor = 0.05f * System.Convert.ToSingle(Mathf.Abs(equilibriumTemperature - currentTemperature) > 12f);
-        else if (height < 4.5f) hFactor = 0.1f * System.Convert.ToSingle(Mathf.Abs(equilibriumTemperature - currentTemperature) > 9f);
-        else if (height < 5.5f) hFactor = 0.25f * System.Convert.ToSingle(Mathf.Abs(equilibriumTemperature - currentTemperature) > 5f);
-        else hFactor = 0.5f * System.Convert.ToSingle(equilibriumTemperature != currentTemperature);
+        else if (height < 3.5f) hFactor = 0.10f * System.Convert.ToSingle(Mathf.Abs(equilibriumTemperature - currentTemperature) > temperatureDifference * 0.9f);
+        else if (height < 4.5f) hFactor = 0.15f * System.Convert.ToSingle(Mathf.Abs(equilibriumTemperature - currentTemperature) > temperatureDifference * 0.6f);
+        else if (height < 5.5f) hFactor = 0.25f * System.Convert.ToSingle(Mathf.Abs(equilibriumTemperature - currentTemperature) > temperatureDifference * 0.3f);
+        else hFactor = 0.4f * System.Convert.ToSingle(equilibriumTemperature != currentTemperature);
         return sign * hFactor;
     }
     
@@ -53,4 +55,9 @@ public class TempControlScript : MonoBehaviour
             particleScript.ChangeTemperature(deltaTemperature * Time.deltaTime);
         }
     }
+
+    void Update() {
+        temperatureDifference = Mathf.Max(1f, GameObject.Find("Water").GetComponent<WaterLayersManagerScript>().TemperatureDifference());
+    }
+
 }
