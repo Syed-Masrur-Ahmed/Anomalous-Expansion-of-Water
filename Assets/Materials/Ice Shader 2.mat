@@ -52,7 +52,7 @@ Material:
     m_Floats:
     - _BUILTIN_QueueControl: 0
     - _BUILTIN_QueueOffset: 0
-    - _Float: 6.7003927
+    - _Float: 10.7
     - _QueueControl: -1
     - _QueueOffset: 0
     m_Colors: []
